@@ -7,7 +7,7 @@ const port = 3000;
 
 // MySQL Connection
 const db = mysql.createConnection({
-    host: 'localhost',
+    host: '124.243.132.196',
     user: 'anthony',
     password: 'Huawei@1234##',
     database: 'users'
@@ -47,6 +47,6 @@ app.post('/submit', (req, res) => {
 
 
 // Start server
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`Server is listening on port 3000`);
 });
