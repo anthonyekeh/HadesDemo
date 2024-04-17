@@ -1,0 +1,23 @@
+name: GitHub Actions Demo building to HUAWEI SWR
+
+on: push
+jobs:
+  push_to_registry:
+    name: push docker image to SWR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out ther repo
+        uses: actions/checkout@v3
+
+      - name: Login to SWR
+        with: docker login -u ap-southeast-3@NO7UJK4XED7CKWXJ8SNW -p f203598a0cfc9e677c0000ba6776d5b9aa9bcf3f17cf15e02275ea6bf2befcfc swr.ap-southeast-3.myhuaweicloud.com
+
+      - name: Build and push to SWR
+        with:
+          context: node_modules/
+          build: docker build -t gitapp .
+          push: docker push swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:v1
+
+      # - login: docker login -u ap-southeast-3@NO7UJK4XED7CKWXJ8SNW -p f203598a0cfc9e677c0000ba6776d5b9aa9bcf3f17cf15e02275ea6bf2befcfc swr.ap-southeast-3.myhuaweicloud.com
+      # - build: docker build -t gitapp .
+      # - push: docker push swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:v1
