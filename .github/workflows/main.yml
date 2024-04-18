@@ -20,10 +20,10 @@ jobs:
           access-key-secret: ${{ secrets.SECRETKEY }}
           region: af-south-1
 
-      - name: Build and push Docker image
-        run: |
-          docker build -t swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:${{ github.sha }} .
-          docker push swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:${{ github.sha }}
+      # - name: Build and push Docker image
+      #   run: |
+      #     docker build -t swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:${{ github.sha }} .
+      #     docker push swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:${{ github.sha }}
 
   # deploy:
   #   runs-on: ubuntu-latest
