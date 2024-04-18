@@ -18,7 +18,7 @@ jobs:
         with:
           access-key-id: ${{ secrets.ACCESSKEY }}
           access-key-secret: ${{ secrets.SECRETKEY }}
-          region: af-south-1
+          region: 'af-south-1'
 
       # - name: Build and push Docker image
       #   run: |
