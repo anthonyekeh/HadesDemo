@@ -36,5 +36,6 @@ jobs:
           # The port to connect to the server ssh
           PORT: 22 # optional, default is 22
           # shell to execute on server
-          script: echo "successfully logged in to Ubuntu server"
+      - name: Confirm login success
+        run: echo "successfully logged in to Ubuntu server"
           
