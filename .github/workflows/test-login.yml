@@ -1,0 +1,21 @@
+name: Test Login to Ubuntu Server
+
+on:
+  push:
+    branches:
+      - master  # Adjust branch(es) to trigger on
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Test SSH Login
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          identity_file: ${{ secrets.SSH_PRIVATE_KEY }}  # Path to private key
+          script: |
+            echo "Successfully logged in to Ubuntu server!"
