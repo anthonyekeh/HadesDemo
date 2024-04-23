@@ -1,9 +1,9 @@
 name: CI/CD to Huawei SWR and CCE
 
-# on:
-  # push:
-    # branches:
-      # - master  # Trigger CI/CD when code is pushed to the 'master' branch
+on:
+  push:
+    branches:
+      - master  # Trigger CI/CD when code is pushed to the 'master' branch
 
 jobs:
   build:
@@ -33,33 +33,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install SSH KEY
-        uses: shimataro/ssh-key-action@v2
+      - name: Server Shell/login to ECS on HUAWEI
+        uses: tzzs/server-shell@v3
         with:
-          key: ${{secrets.SSH_PRIVATE_KEY}}
-          known_hosts: 'just a place holder'
+          # server private key
+          PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          # server login username
+          USERNAME: ${{secrets.SSH_USER}}
+          # server ip
+          IP: ${{secrets.SSH_HOST}}
+          # The port to connect to the server ssh
+          PORT: 22 # optional, default is 22
+          # shell to execute on server
 
-      - name: Login to ECS
-        run: rsync -avzn ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}
-  #       run: |
-  #         sudo mkdir -p $HOME/.kube
-  #         sudo chown -R runner:runner $HOME/.kube
-  #         export KUBECONFIG=$HOME/.kube/config
-  #         echo "${{ secrets.KUBE_CONFIG_DATA }}" > $KUBECONFIG
-  #     - name: Update deployment
-  #       run: |
-  #         sed -i "s@swr.af-south-1.myhuaweicloud.com/ralf/db-app:[a-z0-9]*@swr.af-south-1.myhuaweicloud.com/ralf/db-app:${{ github.sha }}@g" deployment-env.yaml   
-
-
-  #     - name: Debugging
-  #       run: |
-  #         kubectl version
-  #         kubectl cluster-info
-  #         kubectl get nodes
-
-  #     - name: Deploy to Huawei CCE
-  #       run: |
-  #         kubectl apply -f configmap.yaml
-  #         kubectl apply -f deployment-env.yaml
-  #         kubectl apply -f service.yaml
-  
+          # after manually installing docker on server
+      - name: login to SWR, PULL and RUN image
