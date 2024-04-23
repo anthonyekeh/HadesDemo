@@ -5,17 +5,36 @@ on:
     branches:
       - master  # Adjust branch(es) to trigger on
 
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: Test SSH Login
+#         uses: mdelillo/ssh-server-action@v1.0.0
+#         with:
+#           host: ${{ secrets.SSH_HOST }}
+#           username: ${{ secrets.SSH_USER }}
+#           identity_file: ${{ secrets.SSH_PRIVATE_KEY }}  # Path to private key
+#           script: |
+#             echo "Successfully logged in to Ubuntu server!"
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Test SSH Login
-        uses: mdelillo/ssh-server-action@v1.0.0
+      - name: Server Shell
+        uses: tzzs/server-shell@v3
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          identity_file: ${{ secrets.SSH_PRIVATE_KEY }}  # Path to private key
-          script: |
-            echo "Successfully logged in to Ubuntu server!"
+          # server private key
+          PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          # server login username
+          USERNAME: ${{secrets.SSH_USER}}
+          # server ip
+          IP: ${{secrets.SSH_HOST}}
+          # The port to connect to the server ssh
+          PORT: 22 # optional, default is 22
+          # shell to execute on server
+
+          
