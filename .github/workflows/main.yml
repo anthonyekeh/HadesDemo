@@ -25,35 +25,33 @@ jobs:
           docker build -t swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:${{ github.sha }} .
           docker push swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:${{ github.sha }}
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  #     - name: Configure kubectl for Huawei Cloud CCE
-  #       run: |
-  #         sudo mkdir -p $HOME/.kube
-  #         sudo chown -R runner:runner $HOME/.kube
-  #         export KUBECONFIG=$HOME/.kube/config
-  #         echo "${{ secrets.KUBE_CONFIG_DATA }}" > $KUBECONFIG
+      - name: Configure kubectl for Huawei Cloud CCE
+        run: |
+          sudo mkdir -p $HOME/.kube
+          sudo chown -R runner:runner $HOME/.kube
+          export KUBECONFIG=$HOME/.kube/config
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" > $KUBECONFIG
       # - name: Update deployment
         # run: |
           # sed -i "s@swr.af-south-1.myhuaweicloud.com/ralf/db-app:[a-z0-9]*@swr.af-south-1.myhuaweicloud.com/ralf/db-app:${{ github.sha }}@g" deployment-env.yaml   
 
 
-      # - name: Debugging
-      #   run: |
-      #     kubectl version
-      #     kubectl cluster-info
-      #     kubectl get nodes
+      - name: Debugging
+        run: |
+          kubectl version
+          kubectl cluster-info
+          kubectl get nodes
 
-      # - name: Deploy to Huawei CCE
-      #   run: |
-      #     kubectl apply -f serviceaccount.yaml
-      #     kubectl apply -f secretproviderclass.yaml
-      #     kubectl apply -f configmap.yaml
-      #     kubectl apply -f deployment-env.yaml
-      #     kubectl apply -f service.yaml
+      - name: Deploy to Huawei CCE
+        run: |
+          kubectl apply -f Dockerfile
+          kubectl apply -f deployment-env.yaml
+          kubectl apply -f app.js
