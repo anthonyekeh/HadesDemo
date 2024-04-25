@@ -52,6 +52,8 @@ jobs:
 
       - name: Deploy to Huawei CCE
         run: |
-          # kubectl apply -f Dockerfile
           kubectl apply -f deployment-env.yaml
-          kubectl apply -f app.js
+
+      - name: ignore
+          # kubectl apply -f app.js
+          # kubectl apply -f Dockerfile
