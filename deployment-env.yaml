@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+        - name: test
+          image: swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:6b88e120bd18bcf8ae7141da68632b0a6832e637
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: name-collection-config
+          resources:
+            limits:
+              cpu: 100m 
+              memory: 100Mi 
+            requests:
+              cpu: 100m 
+              memory: 100Mi 
