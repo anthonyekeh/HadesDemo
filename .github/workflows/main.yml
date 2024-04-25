@@ -32,7 +32,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        validate: false
 
       - name: Configure kubectl for Huawei Cloud CCE
         run: |
@@ -53,6 +52,6 @@ jobs:
 
       - name: Deploy to Huawei CCE
         run: |
-          kubectl apply -f Dockerfile
+          # kubectl apply -f Dockerfile
           kubectl apply -f deployment-env.yaml
           kubectl apply -f app.js
