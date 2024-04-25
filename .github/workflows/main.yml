@@ -25,26 +25,35 @@ jobs:
           docker build -t swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:${{ github.sha }} .
           docker push swr.ap-southeast-3.myhuaweicloud.com/anthonyorg/gitapp:${{ github.sha }}
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: build
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      - name: Server Shell/login to ECS on HUAWEI
-        uses: tzzs/server-shell@v3
-        with:
-          # server private key
-          PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-          # server login username
-          USERNAME: ${{secrets.SSH_USER}}
-          # server ip
-          IP: ${{secrets.SSH_HOST}}
-          # The port to connect to the server ssh
-          PORT: 22 # optional, default is 22
-          # shell to execute on server
+  #     - name: Configure kubectl for Huawei Cloud CCE
+  #       run: |
+  #         sudo mkdir -p $HOME/.kube
+  #         sudo chown -R runner:runner $HOME/.kube
+  #         export KUBECONFIG=$HOME/.kube/config
+  #         echo "${{ secrets.KUBE_CONFIG_DATA }}" > $KUBECONFIG
+      # - name: Update deployment
+        # run: |
+          # sed -i "s@swr.af-south-1.myhuaweicloud.com/ralf/db-app:[a-z0-9]*@swr.af-south-1.myhuaweicloud.com/ralf/db-app:${{ github.sha }}@g" deployment-env.yaml   
 
-          # after manually installing docker on server
-      - name: login to SWR, PULL and RUN image
+
+      # - name: Debugging
+      #   run: |
+      #     kubectl version
+      #     kubectl cluster-info
+      #     kubectl get nodes
+
+      # - name: Deploy to Huawei CCE
+      #   run: |
+      #     kubectl apply -f serviceaccount.yaml
+      #     kubectl apply -f secretproviderclass.yaml
+      #     kubectl apply -f configmap.yaml
+      #     kubectl apply -f deployment-env.yaml
+      #     kubectl apply -f service.yaml
