@@ -54,6 +54,6 @@ jobs:
         run: |
           kubectl apply -f deployment-env.yaml
 
-      - name: ignore
+      # - name: ignore
           # kubectl apply -f app.js
           # kubectl apply -f Dockerfile
